@@ -2,9 +2,13 @@ name: CI Pipeline
 
 on:
   push:
-    branches:[main,"feature/*","refactor/*"]
+    branches:
+      - main
+      - "feature/*"
+      - "refactor/*"
   pull_request:
-    branches:[main]
+    branches:
+      - main
 
 jobs:
   build:
