@@ -18,7 +18,6 @@ FitSense AI 是一個結合 **數據分析 (Data Analysis)** 與 **自然語言�
 
 ### 2. 多維度量化分析 (Quantitative Analysis)
 - [x] **燃脂效率計算**：分析步數與熱量消耗的相關係數 (Correlation Analysis)
-- [x] **行為模式識別**：自動標記 "Active" (活躍) 與 "Sedentary" (久坐) 日期
 - [ ] **趨勢預測**：基於歷史數據的簡單回歸分析 (Regression - *開發中*)
 
 ### 3. AI 語意理解與 API 服務 (NLP & Backend)
