@@ -1,0 +1,9 @@
+#uv environment
+main.py
+.python-version
+pyproject.toml
+
+/data/
+__pypackages__/
+venv/
+env/
