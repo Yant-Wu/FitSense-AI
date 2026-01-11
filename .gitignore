@@ -2,8 +2,9 @@
 main.py
 .python-version
 pyproject.toml
-
+uv.lock
 /data/
 __pypackages__/
-venv/
+.venv/
+
 env/
