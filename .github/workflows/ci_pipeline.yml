@@ -1,0 +1,31 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:[main,"feature/*"]
+  pull_request:
+    branches:[main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+  
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas matplotlib seaborn numpy
+        pip install flake8
+
+    - name: Lint with flake8 (程式碼品質檢查)
+      run: |
+        # 檢查語法錯誤 (syntax errors) 或變數未定義 (undefined names)
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
