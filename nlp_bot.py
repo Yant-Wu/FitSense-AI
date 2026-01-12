@@ -1,11 +1,13 @@
 import data_engine
 import os
+import re
 
 FILE_PATH = 'data/mturkfitbit_export_3.12.16-4.11.16/Fitabase Data 3.12.16-4.11.16/dailyActivity_merged.csv'
 
 INTENT = {
     "analyze_data": ["分析", "analyze", "相關", "correlation", "數據", "統計"],
-    "plot_data": ["圖", "plot", "畫", "chart", "視覺化"]
+    "plot_data": ["圖", "plot", "畫", "chart", "視覺化"],
+    "predict": ["預測", "predict", "要是", "如果"]
 }
 
 def detect_intent(query):
@@ -39,6 +41,23 @@ def process_query(user_query):
             df_clean = data_engine.clean_data(df)
             data_engine.plot_data(df_clean)
             return "圖表已生成！請開啟 'steps_vs_calories.png' 查看。"
+        
+    elif intent == "predict":
+        print('偵測意圖：[預測卡路里]')
+        match = re.search(r'\d+', query)
+        if match:
+            steps_input = int(match.group())
+            if steps_input <= 100:
+                return "步數應大於100才能進行預測。"
+            
+            df = data_engine.load_data(FILE_PATH)
+            if df is not None:
+                df_clean = data_engine.clean_data(df)
+                predicted_val = data_engine.predict_calories(df_clean, steps_input)
+                return f'如果你走了 {steps_input} 步，預計會燃燒約 {predicted_val:.2f} 卡路里。'
+        else:
+            return "你想預測多少步請輸入數字，例如：預測 20000 步"
+
 
     else:
         return "抱歉，我還在學習中。試試看輸入：'幫我分析資料' 或 '畫圖'。"
