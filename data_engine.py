@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns # 進階視覺化套件適合數據分析
+from sklearn.linear_model import LinearRegression
 
 
 def load_data(filepath):
@@ -25,6 +26,18 @@ def clean_data(df):
     dropped_count = original_count - len(df_cleaned)
     # print(f'刪除不活躍資料筆數: {dropped_count}')
     return df_cleaned
+
+def predict_calories(df:pd.DataFrame, steps:int) -> float:
+    """使用線性回歸預測卡路里"""
+    X = df[['TotalSteps']] 
+    y = df['Calories']
+
+    model = LinearRegression()
+    model.fit(X, y)
+
+    input_df = pd.DataFrame(np.array([[steps]]), columns=['TotalSteps'])
+    predicted_cal = model.predict(input_df)
+    return predicted_cal[0]
 
 def analyze_correlation(df):
     """開始分析"""
