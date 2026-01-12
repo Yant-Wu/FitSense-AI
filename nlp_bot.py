@@ -31,17 +31,20 @@ def generate_llm_response(user_query, context_data):
     請根據數據回答，若無相關數據則憑常識回答。
     """
     try:
-        response = ollama.chat(model="llama3.2", messages=[{'role': 'user', 'content': prompt}])
+        response = ollama.chat(
+            model="llama3.2", 
+            messages=[{'role': 'user', 'content': prompt}],
+            options={'temperature': 0.6}
+            )
         return response['message']['content']
     except Exception as e:
         return f"連接失敗"
-
-
 
 def process_query(user_query):
     
     query = user_query.lower()
     print(f'AI正在思考: {query}')
+    #print('AI正在思考...')
 
     intent = detect_intent(query)
     df = data_engine.load_data(FILE_PATH)
