@@ -23,13 +23,13 @@ def clean_data(df):
     # 資料清洗保留不數到>=100 代表有在動的，.copy避免刪到原本的df
     df_cleaned = df[df['TotalSteps'] >= 100].copy()
     dropped_count = original_count - len(df_cleaned)
-    #print(f'刪除不活躍資料筆數: {dropped_count}')
+    # print(f'刪除不活躍資料筆數: {dropped_count}')
     return df_cleaned
 
 def analyze_correlation(df):
     """開始分析"""
     corr = df['TotalSteps'].corr(df['Calories'])
-    print(f'步數與卡路里相關係數: {corr:.4f}')
+    # print(f'步數與卡路里相關係數: {corr:.4f}')
 
     if corr > 0.7:
         print('步數與卡路里高度相關')

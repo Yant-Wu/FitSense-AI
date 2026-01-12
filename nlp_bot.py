@@ -1,12 +1,27 @@
 import data_engine
 import os
 
+FILE_PATH = 'data/mturkfitbit_export_3.12.16-4.11.16/Fitabase Data 3.12.16-4.11.16/dailyActivity_merged.csv'
+
+INTENT = {
+    "analyze_data": ["分析", "analyze", "相關", "correlation", "數據", "統計"],
+    "plot_data": ["圖", "plot", "畫", "chart", "視覺化"]
+}
+
+def detect_intent(query):
+    """偵測使用者意圖"""
+    for intent, keywords in INTENT.items():
+        if any(keyword in query for keyword in keywords):
+            return intent
+    return None
+
 def process_query(user_query):
     """NLP處理"""
     query = user_query.lower()
     print(f'AI正在思考: {query}')
 
-    if '分析' in query or 'analyze' in query or '相關' in query:
+    intent = detect_intent(query)
+    if intent == "analyze_data":
         print('進行資料分析...')
         df = data_engine.load_data(FILE_PATH)
         if df is not None:
@@ -16,7 +31,7 @@ def process_query(user_query):
         else:
             return '無法讀取資料進行分析'
         
-    elif "圖" in query or "plot" in query or "畫" in query:
+    elif intent == "plot_data":
         print('偵測意圖：[繪製圖表]')
         
         df = data_engine.load_data(FILE_PATH)
@@ -28,17 +43,12 @@ def process_query(user_query):
     else:
         return "抱歉，我還在學習中。試試看輸入：'幫我分析資料' 或 '畫圖'。"
  
-    
-
-
-
 
 
 if __name__ == "__main__":
-    FILE_PATH = 'data/mturkfitbit_export_3.12.16-4.11.16/Fitabase Data 3.12.16-4.11.16/dailyActivity_merged.csv'
-    
     while True:
         try:
+            print('==============================================')
             user_input = input('請輸入指令: ')
             if user_input.strip() == "":
                 continue
