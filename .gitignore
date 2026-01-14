@@ -1,7 +1,6 @@
 #uv environment
-main.py
 .python-version
-pyproject.toml
+
 uv.lock
 /data/
 __pypackages__/
